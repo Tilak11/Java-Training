@@ -20,16 +20,18 @@ public class ThreadsPractice extends Thread {
 			thread1.start();
 			// In order to avoid race condition, we will make sure thread 1 finishes before
 			// exceuting thread 2.
-			thread1.join();
+			//thread1.join();
 			thread2.start();
-			thread2.join();
-		} catch (InterruptedException e) {
+			//thread2.join();
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 	}
 
 	public void run() {
+		synchronized(ThreadsPractice.class) {
+			
 		if (msgString.equals("Withdraw")) {
 			for (int i = 1; i <= 10; i++) {
 				System.out.println("Before withdraw iteration " + i + " -> amt: " + amount);
@@ -42,6 +44,7 @@ public class ThreadsPractice extends Thread {
 				amount += 100;
 				System.out.println("Thread 1: Iteration: " + i + " Total amount: " + amount + "\n");
 			}
+		}
 
 		}
 	}
